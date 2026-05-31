@@ -100,9 +100,16 @@ Diagnostics should cite the rule that triggered them where possible, so warnings
 
 ## Neovim sketch
 
-This can be registered as a custom LSP server:
+This can be registered as a custom LSP server. Diagnostics are normal LSP diagnostics, so Neovim can render them as inline virtual text — the ghost-text-style warning beside the prose.
 
 ```lua
+vim.diagnostic.config({
+  virtual_text = true,
+  underline = true,
+  signs = true,
+  float = true,
+})
+
 vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
   pattern = { "*.md", "*.qmd", "*.tex" },
   callback = function()
@@ -114,6 +121,8 @@ vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
   end,
 })
 ```
+
+If inline messages get too noisy, use `virtual_text = false` and rely on underlines plus hover/floats instead.
 
 ## Direction
 

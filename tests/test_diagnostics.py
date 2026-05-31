@@ -8,6 +8,10 @@ def test_warns_when_abbreviation_is_used_before_definition() -> None:
 
     assert len(diagnostics) == 1
     assert "LSP" in diagnostics[0].message
+    assert diagnostics[0].line == 0
+    assert diagnostics[0].start_character == 16
+    assert diagnostics[0].end_character == 19
+    assert len(diagnostics[0].message) < 80
 
 
 def test_allows_abbreviation_after_definition() -> None:

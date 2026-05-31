@@ -34,9 +34,22 @@ vim.api.nvim_create_autocmd("LspAttach", {
           finish(false, "academic-lsp attached but no diagnostics were published")
           return
         end
+        local extmarks = vim.api.nvim_buf_get_extmarks(0, -1, 0, -1, { details = true })
+        local has_virtual_text = false
+        for _, mark in ipairs(extmarks) do
+          local details = mark[4]
+          if details and details.virt_text then
+            has_virtual_text = true
+            break
+          end
+        end
         for _, diagnostic in ipairs(diagnostics) do
           if diagnostic.message:find("LSP", 1, true) then
-            finish(true, diagnostic.message)
+            if has_virtual_text then
+              finish(true, diagnostic.message)
+            else
+              finish(false, "diagnostic exists but Neovim virtual text was not created")
+            end
             return
           end
         end

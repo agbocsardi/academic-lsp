@@ -56,10 +56,7 @@ def find_abbreviation_diagnostics(text: str) -> list[ProseDiagnostic]:
                     line=line_number,
                     start_character=match.start(),
                     end_character=match.end(),
-                    message=(
-                        f"'{abbr}' looks like an abbreviation, but it has not been defined earlier "
-                        f"in this document. Consider defining it like 'Long Form ({abbr})'."
-                    ),
+                    message=f"Define '{abbr}' before first use, e.g. 'Long Form ({abbr})'.",
                 )
             )
 
