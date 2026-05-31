@@ -2,11 +2,11 @@
 
 Experimental language server diagnostics for academic prose.
 
+## Lore
+
 Inspired by Martin Kleppmann's Bluesky post asking for IDE-style red squiggles when prose refers to a non-obvious concept before defining it:
 
 <https://bsky.app/profile/martin.kleppmann.com/post/3mn5fqwajvs2l>
-
-## Lore
 
 One of the professors at Gergő's school says that "academic writing is more code than literature" because it has to be structured immensely. This project takes that seriously: if prose has code-like structure, it should be possible to build code-like diagnostics for it.
 
