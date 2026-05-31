@@ -51,6 +51,7 @@ files = [
 provider = "openai-compatible"
 base_url = "https://your-endpoint.example/v1"
 model = "deepseek-v4-flash"
+temperature = 0.0
 api_key_env = "ACADEMIC_LSP_API_KEY"
 ```
 

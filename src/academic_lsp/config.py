@@ -25,6 +25,7 @@ class LlmConfig:
     provider: str = "openai-compatible"
     base_url: str | None = None
     model: str | None = None
+    temperature: float = 0.0
     api_key_env: str = "ACADEMIC_LSP_API_KEY"
 
     @property
@@ -75,6 +76,7 @@ def load_config(root: Path) -> AcademicLspConfig:
         provider=llm_data.get("provider", LlmConfig.provider),
         base_url=llm_data.get("base_url"),
         model=llm_data.get("model"),
+        temperature=llm_data.get("temperature", LlmConfig.temperature),
         api_key_env=llm_data.get("api_key_env", LlmConfig.api_key_env),
     )
 

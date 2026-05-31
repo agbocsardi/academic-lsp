@@ -21,6 +21,7 @@ files = ["rules.md"]
 [llm]
 base_url = "https://example.test/v1"
 model = "deepseek-v4-flash"
+temperature = 0.2
 api_key_env = "MY_KEY"
 
 [diagnostics.abbreviations]
@@ -35,6 +36,7 @@ debounce_ms = 2500
     assert config.rules.files == ["rules.md"]
     assert config.llm.base_url == "https://example.test/v1"
     assert config.llm.model == "deepseek-v4-flash"
+    assert config.llm.temperature == 0.2
     assert config.llm.api_key_env == "MY_KEY"
     assert config.diagnostics["abbreviations"].run_on == "save"
     assert config.diagnostics["abbreviations"].debounce_ms == 2500
