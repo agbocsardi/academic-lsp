@@ -82,19 +82,10 @@ This keeps typing responsive while still letting heavier semantic checks run whe
 
 Rule files are plain Markdown so different disciplines, journals, supervisors, or writing courses can bring their own standards.
 
-```md
-# Rules
+The repo includes two example rule packs:
 
-## Abbreviations
-
-- Define abbreviations on first use.
-- Do not abbreviate terms used fewer than three times.
-
-## Paragraphs
-
-- Each paragraph should have a clear topic sentence.
-- The first sentence should connect to the previous paragraph.
-```
+- `rules/basic-academic-prose.md` — small baseline rules used by tests and future evals
+- `rules/jvgemert-writing.md` — example adapted from Jan van Gemert's writing guidelines
 
 Diagnostics should cite the rule that triggered them where possible, so warnings feel like configured writing standards rather than generic AI opinions.
 

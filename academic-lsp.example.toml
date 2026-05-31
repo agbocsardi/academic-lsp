@@ -1,8 +1,7 @@
 [rules]
 files = [
-  ".academic-lsp/rules/base.md",
-  ".academic-lsp/rules/discipline.md",
-  ".academic-lsp/rules/supervisor.md",
+  "rules/basic-academic-prose.md",
+  "rules/jvgemert-writing.md",
 ]
 
 [llm]
