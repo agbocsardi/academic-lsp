@@ -35,6 +35,68 @@ uv sync
 uv run academic-lsp --help
 ```
 
+## Configuration
+
+The server is meant to be configured per project. Copy `academic-lsp.example.toml` to `academic-lsp.toml` and adjust it.
+
+```toml
+[rules]
+files = [
+  ".academic-lsp/rules/base.md",
+  ".academic-lsp/rules/discipline.md",
+  ".academic-lsp/rules/supervisor.md",
+]
+
+[llm]
+provider = "openai-compatible"
+base_url = "https://your-endpoint.example/v1"
+model = "deepseek-v4-flash"
+api_key_env = "ACADEMIC_LSP_API_KEY"
+```
+
+API keys should live in environment variables, not in the project config.
+
+Diagnostic triggers are configurable. Defaults are intentionally conservative:
+
+- deterministic checks run on idle by default
+- LLM-backed checks run on save by default
+- expensive checks should also support manual runs later
+
+```toml
+[diagnostics.abbreviations]
+enabled = true
+engine = "deterministic"
+run_on = "idle"
+debounce_ms = 1500
+
+[diagnostics.paragraph_transitions]
+enabled = true
+engine = "llm"
+run_on = "save"
+```
+
+This keeps typing responsive while still letting heavier semantic checks run when the draft reaches a stable point.
+
+## Rule files
+
+Rule files are plain Markdown so different disciplines, journals, supervisors, or writing courses can bring their own standards.
+
+```md
+# Rules
+
+## Abbreviations
+
+- Define abbreviations on first use.
+- Do not abbreviate terms used fewer than three times.
+
+## Paragraphs
+
+- Each paragraph should have a clear topic sentence.
+- The first sentence should connect to the previous paragraph.
+```
+
+Diagnostics should cite the rule that triggered them where possible, so warnings feel like configured writing standards rather than generic AI opinions.
+
 ## Neovim sketch
 
 This can be registered as a custom LSP server:

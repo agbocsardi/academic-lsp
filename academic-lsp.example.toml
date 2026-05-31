@@ -1,0 +1,34 @@
+[rules]
+files = [
+  ".academic-lsp/rules/base.md",
+  ".academic-lsp/rules/discipline.md",
+  ".academic-lsp/rules/supervisor.md",
+]
+
+[llm]
+provider = "openai-compatible"
+base_url = "https://your-endpoint.example/v1"
+model = "deepseek-v4-flash"
+api_key_env = "ACADEMIC_LSP_API_KEY"
+
+[diagnostics.abbreviations]
+enabled = true
+engine = "deterministic"
+run_on = "idle"
+debounce_ms = 1500
+
+[diagnostics.forbidden_phrases]
+enabled = true
+engine = "deterministic"
+run_on = "idle"
+debounce_ms = 1500
+
+[diagnostics.concept_definitions]
+enabled = true
+engine = "llm"
+run_on = "save"
+
+[diagnostics.paragraph_transitions]
+enabled = true
+engine = "llm"
+run_on = "save"
