@@ -1,0 +1,27 @@
+[project]
+name = "academic-lsp"
+version = "0.1.0"
+description = "Experimental language server diagnostics for academic prose."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+  { name = "Gergő Bocsárdi" }
+]
+dependencies = [
+  "pygls>=1.3.1",
+]
+
+[project.scripts]
+academic-lsp = "academic_lsp.server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

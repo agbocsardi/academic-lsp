@@ -1,0 +1,18 @@
+from academic_lsp.diagnostics import find_abbreviation_diagnostics
+
+
+def test_warns_when_abbreviation_is_used_before_definition() -> None:
+    text = "This paper uses LSP diagnostics for prose."
+
+    diagnostics = find_abbreviation_diagnostics(text)
+
+    assert len(diagnostics) == 1
+    assert "LSP" in diagnostics[0].message
+
+
+def test_allows_abbreviation_after_definition() -> None:
+    text = "Language Server Protocol (LSP) diagnostics are useful. LSP works for prose too."
+
+    diagnostics = find_abbreviation_diagnostics(text)
+
+    assert diagnostics == []
