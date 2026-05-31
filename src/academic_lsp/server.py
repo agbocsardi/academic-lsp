@@ -7,8 +7,8 @@ from lsprotocol.types import (
     DiagnosticSeverity,
     DidChangeTextDocumentParams,
     DidOpenTextDocumentParams,
-    InitializeParams,
     Position,
+    PublishDiagnosticsParams,
     Range,
     TEXT_DOCUMENT_DID_CHANGE,
     TEXT_DOCUMENT_DID_OPEN,
@@ -36,7 +36,9 @@ def publish_diagnostics(uri: str, text: str) -> None:
         )
         for item in find_abbreviation_diagnostics(text)
     ]
-    server.publish_diagnostics(uri, diagnostics)
+    server.text_document_publish_diagnostics(
+        PublishDiagnosticsParams(uri=uri, diagnostics=diagnostics)
+    )
 
 
 @server.feature(TEXT_DOCUMENT_DID_OPEN)
@@ -49,11 +51,6 @@ def did_open(ls: LanguageServer, params: DidOpenTextDocumentParams) -> None:
 def did_change(ls: LanguageServer, params: DidChangeTextDocumentParams) -> None:
     document = ls.workspace.get_text_document(params.text_document.uri)
     publish_diagnostics(document.uri, document.source)
-
-
-@server.feature("initialize")
-def initialize(ls: LanguageServer, params: InitializeParams) -> None:
-    ls.show_message_log(f"{SERVER_NAME} initialized")
 
 
 def main() -> None:
