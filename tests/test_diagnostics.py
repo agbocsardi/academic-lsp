@@ -20,3 +20,13 @@ def test_allows_abbreviation_after_definition() -> None:
     diagnostics = find_abbreviation_diagnostics(text)
 
     assert diagnostics == []
+
+
+def test_warns_when_abbreviation_precedes_definition_on_same_line() -> None:
+    text = "AOM submissions are tricky. Academy of Management (AOM) reviewers expect clarity."
+
+    diagnostics = find_abbreviation_diagnostics(text)
+
+    assert len(diagnostics) == 1
+    assert "AOM" in diagnostics[0].message
+    assert diagnostics[0].start_character == 0

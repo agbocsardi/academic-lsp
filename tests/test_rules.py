@@ -1,6 +1,5 @@
 from pathlib import Path
 
-
 BASIC_RULES = Path("rules/basic-academic-prose.md")
 
 
@@ -17,8 +16,9 @@ def test_basic_ruleset_documents_tested_llm_rule() -> None:
     rules = BASIC_RULES.read_text(encoding="utf-8")
 
     assert "Rule: define-central-terms" in rules
-    assert "Define the central term before using it." in rules
-    assert '"span_id": "p1"' in rules
+    assert "Define 'institutional complexity' before using it." in rules
+    assert "The message should name or quote the central term" in rules
+    assert '"range_hint": "paragraph 2"' in rules
     assert '"code": "define-central-terms"' in rules
 
 

@@ -48,11 +48,11 @@ files = [
 ]
 
 [llm]
-provider = "openai-compatible"
-base_url = "https://your-endpoint.example/v1"
-model = "deepseek-v4-flash"
+provider = "litellm"
+base_url = "https://opencode.ai/zen/go/v1"
+model = "openai/deepseek-v4-flash"
 temperature = 0.0
-api_key_env = "ACADEMIC_LSP_API_KEY"
+api_key_env = "OPENCODE_API_KEY"
 ```
 
 API keys should live in environment variables, not in the project config.
@@ -76,7 +76,7 @@ engine = "llm"
 run_on = "save"
 ```
 
-This keeps typing responsive while still letting heavier semantic checks run when the draft reaches a stable point.
+This keeps typing responsive while still letting heavier semantic checks run when the draft reaches a stable point. The current LSP wiring runs deterministic diagnostics on open/change and LLM diagnostics on save when a model and API key are configured.
 
 ## Rule files
 
@@ -88,6 +88,17 @@ The repo includes two example rule packs:
 - `rules/jvgemert-writing.md` — example adapted from Jan van Gemert's writing guidelines
 
 Diagnostics should cite the rule that triggered them where possible, so warnings feel like configured writing standards rather than generic AI opinions.
+
+## Try it in Neovim
+
+This repo includes `examples/smoke.md` and a local `academic-lsp.toml` for testing.
+
+```bash
+export OPENCODE_API_KEY=...
+nvim examples/smoke.md
+```
+
+Deterministic abbreviation diagnostics should appear after opening/editing. LLM diagnostics run on save.
 
 ## Neovim sketch
 

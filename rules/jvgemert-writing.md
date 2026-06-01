@@ -40,8 +40,9 @@ When used by the LLM diagnostic path, return only concise diagnostics that can f
 
 Each diagnostic should:
 
-- point to one server-provided `span_id`
+- include a concrete `range_hint`, such as `paragraph 2` or `sentence 1`
 - use one of the rule IDs above
+- name or quote the specific phrase, claim, actor, or repeated idea that triggered it
 - explain the issue in one short sentence
-- avoid generic style advice
+- avoid generic style advice like `Use active voice` without saying where
 - avoid rewriting the whole paragraph

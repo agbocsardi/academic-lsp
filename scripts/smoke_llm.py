@@ -22,7 +22,7 @@ Platform governance improves organizational performance. Institutional complexit
 def main() -> None:
     base_url = os.environ.get("ACADEMIC_LSP_LLM_BASE_URL", "https://opencode.ai/zen/go/v1")
     model = os.environ.get("ACADEMIC_LSP_LLM_MODEL", "openai/deepseek-v4-flash")
-    api_key_env = os.environ.get("ACADEMIC_LSP_LLM_API_KEY_ENV", "OPENCODE_GO_API_KEY")
+    api_key_env = os.environ.get("ACADEMIC_LSP_LLM_API_KEY_ENV", "OPENCODE_API_KEY")
     temperature = float(os.environ.get("ACADEMIC_LSP_LLM_TEMPERATURE", "0"))
 
     config = AcademicLspConfig(

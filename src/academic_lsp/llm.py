@@ -38,7 +38,8 @@ class LiteLlmClient:
             from litellm import completion
         except ImportError as error:
             raise LlmClientError(
-                "LiteLLM is not installed. Run with `uv run --with litellm ...` or install the dev extra."
+                "LiteLLM is not installed. Run with `uv run --with litellm ...` "
+                "or install the dev extra."
             ) from error
 
         kwargs: dict[str, Any] = {
@@ -64,8 +65,14 @@ def check_prose_with_llm(text: str, rules: str, client: ChatJsonClient) -> list[
                 "content": (
                     "You are an academic prose diagnostic engine. "
                     "Return only JSON with a top-level diagnostics array. "
-                    "Each diagnostic must have range_hint, severity, code, message, and optional rule. "
-                    "Be conservative: flag only concrete issues grounded in the provided rules."
+                    "Each diagnostic must have range_hint, severity, code, message, "
+                    "and optional rule. "
+                    "Be conservative: flag only concrete issues grounded in the provided rules. "
+                    "Make messages specific: name or quote the exact concept, claim, "
+                    "abbreviation, sentence, or phrase that triggered the diagnostic. "
+                    "Avoid generic messages like 'Define the central term before using it.' "
+                    "unless the term is named too. Prefer short messages such as: "
+                    "Define 'institutional complexity' before using it."
                 ),
             },
             {

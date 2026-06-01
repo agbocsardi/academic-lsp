@@ -36,8 +36,16 @@ Flag a span when a specialized concept is doing explanatory work but has not yet
 Good diagnostic:
 
 ```text
+Define 'institutional complexity' before using it.
+```
+
+Bad diagnostic:
+
+```text
 Define the central term before using it.
 ```
+
+The message should name or quote the central term so the writer knows what to fix.
 
 Do not flag broad ordinary words, generic academic vocabulary, or terms that are immediately explained.
 
@@ -50,8 +58,16 @@ Flag a paragraph when it introduces a new claim, mechanism, construct, or contex
 Good diagnostic:
 
 ```text
+Connect 'institutional complexity' to the previous platform-governance claim.
+```
+
+Bad diagnostic:
+
+```text
 Connect this paragraph to the previous claim.
 ```
+
+The message should name the new claim, mechanism, or construct that lacks a bridge.
 
 Do not flag deliberate section openings or paragraphs that clearly continue the same topic.
 
@@ -75,20 +91,20 @@ The abbreviation LSP appears in this paragraph without having been defined previ
 
 ## LLM output contract
 
-LLM diagnostics should return structured JSON using only server-provided span IDs.
+LLM diagnostics should return structured JSON.
 
 ```json
 {
   "diagnostics": [
     {
-      "span_id": "p1",
+      "range_hint": "paragraph 2",
       "severity": "warning",
       "code": "define-central-terms",
-      "message": "Define the central term before using it.",
+      "message": "Define 'institutional complexity' before using it.",
       "rule": "define-central-terms"
     }
   ]
 }
 ```
 
-The server owns the span-to-range mapping. The model should not return line numbers.
+For now, `range_hint` is displayed in the message and diagnostics are mapped heuristically to quoted terms or prose paragraphs. Later the server can provide stable span IDs and map them to precise ranges.

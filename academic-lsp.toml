@@ -17,12 +17,6 @@ engine = "deterministic"
 run_on = "idle"
 debounce_ms = 1500
 
-[diagnostics.forbidden_phrases]
-enabled = true
-engine = "deterministic"
-run_on = "idle"
-debounce_ms = 1500
-
 [diagnostics.concept_definitions]
 enabled = true
 engine = "llm"

@@ -4,7 +4,9 @@ import re
 from dataclasses import dataclass
 
 ABBREVIATION_RE = re.compile(r"\b[A-Z][A-Z0-9]{1,}\b")
-DEFINITION_RE = re.compile(r"\b(?P<long>[A-Z][A-Za-z0-9 ,\-/]{3,}?)\s*\((?P<abbr>[A-Z][A-Z0-9]{1,})\)")
+DEFINITION_RE = re.compile(
+    r"\b(?P<long>[A-Z][A-Za-z0-9 ,\-/]{3,}?)\s*\((?P<abbr>[A-Z][A-Z0-9]{1,})\)"
+)
 
 IGNORED_ABBREVIATIONS = {
     "I",
@@ -44,11 +46,34 @@ def find_abbreviation_diagnostics(text: str) -> list[ProseDiagnostic]:
     diagnostics: list[ProseDiagnostic] = []
 
     for line_number, line in enumerate(text.splitlines()):
-        definitions_on_line = {match.group("abbr") for match in DEFINITION_RE.finditer(line)}
+        definitions_on_line = list(DEFINITION_RE.finditer(line))
 
         for match in ABBREVIATION_RE.finditer(line):
             abbr = match.group(0)
-            if abbr in IGNORED_ABBREVIATIONS or abbr in defined or abbr in definitions_on_line:
+            definition_match = next(
+                (
+                    definition
+                    for definition in definitions_on_line
+                    if definition.group("abbr") == abbr
+                ),
+                None,
+            )
+            is_definition_occurrence = (
+                definition_match is not None
+                and definition_match.start("abbr") == match.start()
+                and definition_match.end("abbr") == match.end()
+            )
+            has_prior_same_line_definition = any(
+                definition.group("abbr") == abbr and definition.start("abbr") < match.start()
+                for definition in definitions_on_line
+            )
+
+            if (
+                abbr in IGNORED_ABBREVIATIONS
+                or abbr in defined
+                or is_definition_occurrence
+                or has_prior_same_line_definition
+            ):
                 continue
 
             diagnostics.append(
@@ -60,6 +85,6 @@ def find_abbreviation_diagnostics(text: str) -> list[ProseDiagnostic]:
                 )
             )
 
-        defined.update(definitions_on_line)
+        defined.update(match.group("abbr") for match in definitions_on_line)
 
     return diagnostics
